@@ -7,7 +7,6 @@
             "args": [
                 "-g",
                 "-Og",
-                // "-fno-common",
                 "-o",
                 "mms",
                 "main.c",
