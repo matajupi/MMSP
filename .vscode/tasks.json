@@ -10,7 +10,7 @@
                 // "-fno-common",
                 "-o",
                 "mms",
-                "t1.c",
+                "main.c",
                 "mms.h",
                 "mmslib.c"
             ],

@@ -4,10 +4,11 @@
 typedef struct Heap Heap;
 
 struct Heap {
-    int data;
     int refc;
+    int data;
+    Heap *heap;
 };
 
-Heap **new_heap();
-void assign(Heap **to, Heap **from);
-void free_heap(Heap **heap);
+Heap *new_heap();
+void assign(Heap **to, Heap *ref);
+void free_heap(Heap *heap);
