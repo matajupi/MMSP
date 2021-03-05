@@ -2,7 +2,6 @@
 #include <CUnit/Console.h>
 #include <CUnit/TestDB.h>
 #include "mms.h"
-#include <string.h> // keshi
 
 void Test_CreateAndAssign(void);
 void Test_AssignToAnotherEmpty(void);
@@ -12,6 +11,7 @@ void Test_PassAsArgument(void);
 void Test_Return_GetCase(void);
 void Test_Return_LostCase(void);
 void Test_Inner(void);
+void Test_ComplexInner(void);
 
 int main(void) {
     CU_pSuite suite;
@@ -26,6 +26,7 @@ int main(void) {
     CU_add_test(suite, "Test_Return_GetCase", Test_Return_GetCase);
     CU_add_test(suite, "Test_Return_LostCase", Test_Return_LostCase);
     CU_add_test(suite, "Test_Inner", Test_Inner);
+    CU_add_test(suite, "Test_ComplexInner", Test_ComplexInner);
 
     CU_console_run_tests();
     CU_cleanup_registry();
@@ -150,5 +151,21 @@ void Test_Inner(void) {
 
     CU_ASSERT_EQUAL(4, heap->data);
 
+    free_heap(heap);
+}
+
+void Test_ComplexInner(void) {
+    Heap *heap = NULL;
+    assign(&heap, new_heap());
+    heap->data = 1;
+    assign(&(heap->heap), new_heap());
+    heap->heap->data = 2;
+    assign(&(heap->heap->heap), new_heap());
+    heap->heap->heap->data = 3;
+    // 循環参照になってるので自動開放不可
+    assign(&(heap->heap->heap->heap), heap);
+    
+    CU_ASSERT_EQUAL(heap->data, heap->heap->heap->heap->data);
+    
     free_heap(heap);
 }

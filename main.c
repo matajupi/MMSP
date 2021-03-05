@@ -7,19 +7,26 @@
 // DONE: Parameter test
 // DONE: Return heap test
 // DONE: Return heap but not catch test (will be free case)
-// TODO: Heap's heap(implement)
+// DONE: Heap's heap(implement)
 int main(int argc, char **argv) {
-    Heap *heap = NULL;
-    assign(&heap, new_heap());
-    Heap *heap2 = NULL;
-    assign(&heap2, new_heap());
-    Heap *another = NULL;
-    assign(&another, heap2);
+    Heap *a = NULL;
+    assign(&a, new_heap());
+    a->data = 10;
+    Heap *b = NULL;
+    assign(&b, new_heap());
+    b->data = 5;
+    Heap *c = NULL;
+    assign(&c, new_heap());
+    c->data = a->data + b->data;
+    assign(&(c->heap), a);
+    assign(&(a->heap), b);
 
-    assign(&another, heap);
+    printf("C: %d\n", c->data);
+    printf("A: %d\n", c->heap->data);
+    printf("B: %d\n", c->heap->heap->data);
 
-    free_heap(heap);
-    free_heap(heap2);
-    free_heap(another);
+    free_heap(a);
+    free_heap(b);
+    free_heap(c);
     return 0;
 }
