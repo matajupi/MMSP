@@ -1,6 +1,7 @@
 #include "mms.h"
 
 // Create new heap filled with 0
+// This code contains a bug because it returns a pointer to a local variable.
 Heap *new_heap() {
     Heap *heap = calloc(1, sizeof(Heap));
     // Initialize
